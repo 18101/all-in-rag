@@ -91,7 +91,7 @@
 
 混合检索通常并行执行两种检索算法，然后将两组异构的结果集融合成一个统一的排序列表。以下是两种主流的融合策略：
 
-#### 2.1.1 倒数排序融合 (Reciprocal Rank Fusion, RRF)
+#### 2.1.1 倒数排序融合 (Reciprocal /rɪˈsɪprəkl/ Rank Fusion, RRF)
 
 RRF 不关心不同检索系统的原始得分，只关心每个文档在各自结果集中的**排名**。其思想是：一个文档在不同检索系统中的排名越靠前，它的最终得分就越高。
 
@@ -180,6 +180,10 @@ if not milvus_client.has_collection(COLLECTION_NAME):
 
     # 创建索引
     print("--> 正在为新集合创建索引...")
+    # IP = Inner Product，内积（点积），向量相似度计算方式。注意区分：
+    # IP 内积：直接向量点乘
+    # L2：欧氏距离，算向量之间的空间距离
+    # COSINE：余弦相似度，等价于归一化之后的内积
     sparse_index = {"index_type": "SPARSE_INVERTED_INDEX", "metric_type": "IP"}
     collection.create_index("sparse_vector", sparse_index)
     print("稀疏向量索引创建成功。")
@@ -200,11 +204,19 @@ print(f"--> Collection '{COLLECTION_NAME}' 已加载到内存。")
 - **稀疏向量**: `SPARSE_FLOAT_VECTOR` 类型，存储关键词权重
 - **密集向量**: `FLOAT_VECTOR` 类型，固定1024维，存储语义特征
 
-
 ### 3.2 步骤二：BGE-M3 双向量生成
 
 这里使用 BGE-M3 作为向量生成器，它能够同时生成稀疏向量和密集向量。
+```markdown
+BGE 全称：BAAI General Embedding
 
+BAAI = Beijing Academy of Artificial Intelligence，北京智源人工智能研究院
+
+M3 的含义（三个 Multi）
+- Multi‑Functionality 多功能：dense /sparse/multi‑vector (ColBERT) 三种检索模式
+- Multi‑Linguality 多语言：支持 100 + 语言
+- Multi‑Granularity 多粒度：支持短文本～8192 长文档
+```
 #### 3.2.1 数据加载与预处理
 
 ```python
