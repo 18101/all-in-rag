@@ -254,6 +254,8 @@ Milvus 提供了多种向量索引算法，以适应不同的应用场景。以�
 
 在本节中，我们将通过一个完整的示例，演示如何使用 Milvus 和 Visualized-BGE 模型构建一个端到端的图文多模态检索引擎。
 
+[Visualized‑BGE](https://github.com/FlagOpen/FlagEmbedding/tree/master/research/visual_bge)是图文多模态 Embedding 向量模型，属于 FlagEmbedding 项目，把图像 token 嵌入融入 BGE 文本编码器，图像、文本、图文混合输入输出同一个向量空间，同时保留原版 BGE 极强的文本检索能力。
+
 ### 4.1 初始化与工具定义
 
 首先导入所有必需的库，定义好模型路径、数据目录等常量。为了代码的整洁和复用，将 Visualized-BGE 模型的加载和编码逻辑封装在一个 `Encoder` 类中，并定义了一个 `visualize_results` 函数用于后续的结果可视化。
