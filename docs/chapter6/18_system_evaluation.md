@@ -105,6 +105,21 @@
 
     其中，`BP` 是长度惩罚因子，`p_n` 是修正后的n-gram精确率。
 
+    BP (Brevity Penalty) 简短惩罚公式：
+  
+$$
+BP =
+\begin{cases}
+1 & c > r \\
+e^{1-\frac{r}{c}} & c \le r
+\end{cases}
+$$
+
+    符号定义：
+    c = Candidate 候选文本长度（单词数）
+    r = Reference 参考文本长度（单词数）
+    如果有多条参考译文：选取长度最接近 c的那条作为 r。
+
 - **METEOR (Metric for Evaluation of Translation with Explicit ORdering):** 作为BLEU的改进版，METEOR同时考量 **精确率和召回率** 的调和平均，并通过词干和同义词匹配（如将'boat'和'ship'视为相关）来更好地捕捉语义相似性。其评估结果通常被认为与人类判断的相关性更高。
 
     $$F_{\text{mean}} = \frac{P \times R}{\alpha P + (1-\alpha)R}$$
